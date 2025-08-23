@@ -24,10 +24,16 @@ void buffer_clear(Uint32 c) {
 	}
 }
 
+void buffer_draw_pixel(int x, int y, Uint32 c) {
+    if ( x < 0 || x >= buffer_w ) return;
+    if ( y < 0 || y >= buffer_h ) return;
+    buffer[x + y * buffer_w] = c;
+}
+
 void buffer_draw_grid(void) {
 	for ( int x = 0; x < buffer_w; x += 10 ) {
 		for ( int y = 0; y < buffer_h; y += 10 ) {
-			buffer[x + y * buffer_w] = 0xFF505050;
+			buffer_draw_pixel(x, y, 0xFF505050);
 		}
 	}
 }
@@ -35,9 +41,7 @@ void buffer_draw_grid(void) {
 void buffer_draw_rect(int x, int y, int w, int h, Uint32 c) {
 	for ( int _x = x; _x < x + w; _x++ ) {
 		for ( int _y = y; _y < y + h; _y++ ) {
-			if ( _x < 0 || _x >= buffer_w ) continue;
-			if ( _y < 0 || _y >= buffer_h ) continue;
-			buffer[_x + _y * buffer_w] = c;
+			buffer_draw_pixel(_x, _y, c);
 		}
 	}
 }
