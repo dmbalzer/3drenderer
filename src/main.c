@@ -3,7 +3,7 @@
 
 const int window_w = 960;
 const int window_h = 640;
-int quit = 0;
+bool quit = 0;
 
 const bool* keys = NULL;
 
@@ -15,7 +15,7 @@ void setup(void) {
 
 void check_input(void) {
 	quit = sdl_do_events();
-	if ( keys[SDL_SCANCODE_ESCAPE] ) quit = 1;
+	if ( keys[SDL_SCANCODE_ESCAPE] ) quit = true;
 }
 
 void update(void) {

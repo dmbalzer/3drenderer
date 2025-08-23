@@ -1,5 +1,4 @@
 #include "sdl.h"
-#include <SDL3/SDL.h>
 
 static SDL_Window* window = NULL;
 static SDL_Renderer* renderer = NULL;
@@ -7,20 +6,20 @@ static SDL_Texture* buffer_texture = NULL;
 static float frametime = 0.0f;
 
 /* Initialize SDL Window and Renderer. Returns if should quit */
-int sdl_init(int window_w, int window_h) {
+bool sdl_init(int window_w, int window_h) {
 	if ( !SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) ) {
 		SDL_Log("%s", SDL_GetError());
-		return 1;
+		return true;
 	}
 	
 	if ( !SDL_CreateWindowAndRenderer(NULL,  window_w, window_h, 0, &window, &renderer) ) {
 		SDL_Log("%s", SDL_GetError());
-		return 1;
+		return true;
 	}
 
 	if ( !SDL_SetRenderVSync(renderer, 1) ) {
 		SDL_Log("%s", SDL_GetError());
-		return 1;
+		return true;
 	}
 	
 	buffer_texture = SDL_CreateTexture(renderer,
@@ -29,16 +28,16 @@ int sdl_init(int window_w, int window_h) {
 			window_w,
 			window_h);
 
-	return 0;
+	return false;
 }
 
 /* Check events. Returns if should quit */
-int sdl_do_events(void) {
+bool sdl_do_events(void) {
 	SDL_Event event;
-	int quit = 0;
+	bool quit = 0;
 	while ( SDL_PollEvent(&event) ) {
 		switch ( event.type ) {
-			case SDL_EVENT_QUIT: quit = 1; break;
+			case SDL_EVENT_QUIT: quit = true; break;
 		}
 	}
 

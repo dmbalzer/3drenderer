@@ -1,10 +1,11 @@
 #ifndef SDL_INCLUDED
 #define SDL_INCLUDED
+#include <SDL3/SDL.h>
 
 /* Initialize SDL Window and Renderer. Returns if should quit */
-int sdl_init(int window_w, int window_h);
+bool sdl_init(int window_w, int window_h);
 /* Check events. Returns if should quit */
-int sdl_do_events(void);
+bool sdl_do_events(void);
 void sdl_render(void* buffer);
 void sdl_quit(void);
 
