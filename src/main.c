@@ -9,8 +9,9 @@ const bool* keys = NULL;
 
 void setup(void) {
 	quit = sdl_init(window_w, window_h);
-	keys = SDL_GetKeyboardState(NULL);
+	quit = sdl_init_buffer_texture(window_w, window_h);
 	buffer_init(window_w, window_h);
+	keys = SDL_GetKeyboardState(NULL);
 }
 
 void check_input(void) {

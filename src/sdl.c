@@ -6,13 +6,13 @@ static SDL_Texture* buffer_texture = NULL;
 static float frametime = 0.0f;
 
 /* Initialize SDL Window and Renderer. Returns if should quit */
-bool sdl_init(int window_w, int window_h) {
+bool sdl_init(int w, int h) {
 	if ( !SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) ) {
 		SDL_Log("%s", SDL_GetError());
 		return true;
 	}
 	
-	if ( !SDL_CreateWindowAndRenderer(NULL,  window_w, window_h, 0, &window, &renderer) ) {
+	if ( !SDL_CreateWindowAndRenderer(NULL,  w, h, 0, &window, &renderer) ) {
 		SDL_Log("%s", SDL_GetError());
 		return true;
 	}
@@ -22,12 +22,16 @@ bool sdl_init(int window_w, int window_h) {
 		return true;
 	}
 	
-	buffer_texture = SDL_CreateTexture(renderer,
-			SDL_PIXELFORMAT_ARGB8888,
-			SDL_TEXTUREACCESS_STREAMING,
-			window_w,
-			window_h);
+	return false;
+}
 
+bool sdl_init_buffer_texture(int w, int h) {
+	buffer_texture = SDL_CreateTexture(renderer,
+		SDL_PIXELFORMAT_ARGB8888,
+		SDL_TEXTUREACCESS_STREAMING,
+		w,
+		h);
+	if ( buffer_texture == NULL ) return true;
 	return false;
 }
 
